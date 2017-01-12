@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <script type="text/x-handlebars">
+      <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">Bloggr</a>
+        <ul class="nav">
+          <li>{{#link-to 'posts'}}Posts{{/link-to}}</li>
+          <li>{{#link-to 'about'}}About{{/link-to}}</li>
+        </ul>
+      </div>
+    </div>
+  {{outlet}}
+  </script>
+  
+   <script type="text/x-handlebars" id="posts">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <table class='table'>
+            <thead>
+              <tr><th>Recent Posts</th></tr>
+            </thead>
+            {{#each}}
+            <tr><td>
+              {{#link-to 'post' this}}
+  <!-- optional 'this' argument referes to the #each that it's nested inside -->
+                {{title}} <small class='muted'>by {{author.name}}</small>
+              {{/link-to}}
+           </td></tr>
+            {{/each}}
+          </table>
+        </div>
+        <div class="span9">
+          {{outlet}}
+        </div>
+      </div>
+    </div>
+  </script>
+  
+  <script type="text/x-handlebars" id="post">
+  <!-- editing action -->
+  {{#if isEditing}}
+    {{partial 'post/edit'}}
+    <button {{action 'doneEditing'}}>Done</button>
+    {{else}}
+    <button {{action 'edit'}}>Edit</button>
+  {{/if}}
+    
+    <h1>{{title}}</h1>
+    <h2>by {{author.name}} <small class="muted">({{format-date date}})</small></h2>
+    
+    <hr>
+    
+    <div class="intro">
+      {{markdown excerpt}}
+    </div>
+    
+    <div class="below-the-fold">
+      {{markdown body}}
+    </div>
+  </script>
+  
+  <script type="text/x-handlebars" id="post/_edit">
+    <p>{{input type="text" value=title}}</p>
+    <p>{{input type="text" value=excerpt}}</p>
+     <p>{{textarea value=body}}</p>
+  </script>
+  
+  <script type="text/x-handlebars" id="about">
+  <h1>About</h1>
+  
+  <h4>This is static placeholder content to be replaced with JSON data</h4>
+  <p>
+  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo. Nulla vitae elit libero, a pharetra augue. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+
+Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+  </p>
+
+  
+  </script>
+
+
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/handlebars-1.0.0.js"></script>
+  <script src="js/libs/ember-1.1.2.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
